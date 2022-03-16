@@ -1,31 +1,23 @@
 let row = document.getElementsByClassName("row");
-// console.log(row);
 let start = document.querySelector("#start");
 let pause = document.querySelector("#pause");
+let minute = document.querySelector("#minute");
+let second = document.querySelector("#second");
 
 let colorArr = ["#1e90ff", "#2ed573", "#ffa502", "#ff6348", "#ff4757"];
 
 let timeOutSetUp;
-
-// function startTimer() {
-//   start.setAttribute(
-//     "style",
-//     "box-shadow: inset 0 -4px 6px 4px #3f4ffffa, inset 0 1px 5px 17px #3f42fffa;"
-//   );
-
-//   for (let i = 0; i < row.length; i++) {
-//     timeOutSetUp = setTimeout(function () {
-//       console.log(i);
-//       let backgroundColor = "background-color:" + colorArr[i] + ";";
-//       row[i].setAttribute("style", backgroundColor);
-//     }, i * 3000);
-//   }
-// }
+let myInterval;
 
 let i = 0,
   isActive = true;
 function startTimer() {
   console.log(i);
+  start.setAttribute(
+    "style",
+    "box-shadow: inset 0 -4px 6px 4px #3f4ffffa, inset 0 1px 5px 17px #3f42fffa;"
+  );
+
   if (!isActive) {
     i = 0;
     return;
@@ -42,6 +34,8 @@ function startTimer() {
 
 function pauseTimer() {
   isActive = false;
+  clearInterval(myInterval);
+  // second.innerHTML = 15;
 }
 
 function resetTimer() {
@@ -50,4 +44,16 @@ function resetTimer() {
   for (let j = 0; j < row.length; j++) {
     row[j].setAttribute("style", "background-color:#f1f2f6;");
   }
+  clearInterval(myInterval);
+  second.innerHTML = 15;
+}
+
+function startTime() {
+  console.log("clicked");
+  myInterval = setInterval(intervalSetUp, 1000);
+}
+
+function intervalSetUp() {
+  second.innerHTML = parseInt(second.innerHTML) - 1;
+  console.log(second.innerHTML);
 }
