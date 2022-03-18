@@ -7,7 +7,7 @@ body {
 }
 h1 {
     color: #3742fa;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family:sans-serif;
     font-size: 36px;
     text-align: center;
     margin-bottom: 50px;
@@ -90,4 +90,17 @@ h1 {
     transform: scale3d(1, 1.1, 1.1);
     background-color: #5352ed;
     box-shadow: inset 0 -4px 6px 4px #5352ffed, inset 0 1px 5px 17px #5352edff;
+}
+#countdown {
+    font-family:sans-serif;
+    font-size: 30px;
+    height: 35px;
+    width: 80px;
+    display: flex;
+    background-color: #ff7f50;
+    margin: 20px auto;
+    justify-content: center;
+    line-height: 1.3;
+    letter-spacing: 2px;
+    border-radius: 5px;
 }

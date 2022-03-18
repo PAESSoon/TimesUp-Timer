@@ -34,7 +34,8 @@ function startTimer() {
 
 function pauseTimer() {
   isActive = false;
-  clearInterval(myInterval);
+  clearInterval(minuteInterval);
+  clearInterval(secondInterval);
   // second.innerHTML = 15;
 }
 
@@ -44,16 +45,24 @@ function resetTimer() {
   for (let j = 0; j < row.length; j++) {
     row[j].setAttribute("style", "background-color:#f1f2f6;");
   }
-  clearInterval(myInterval);
+  clearInterval(secondInterval);
+  clearInterval(minuteInterval);
   second.innerHTML = 15;
+  minute.innerHTML = 3;
 }
 
 function startTime() {
   console.log("clicked");
-  myInterval = setInterval(intervalSetUp, 1000);
+  minuteInterval = setInterval(minuteIntervalSetUp, 60000);
+  secondInterval = setInterval(secondIntervalSetUp, 1000);
 }
 
-function intervalSetUp() {
+function secondIntervalSetUp() {
   second.innerHTML = parseInt(second.innerHTML) - 1;
+  console.log(second.innerHTML);
+}
+
+function minuteIntervalSetUp() {
+  minute.innerHTML = parseInt(minute.innerHTML) - 1;
   console.log(second.innerHTML);
 }
