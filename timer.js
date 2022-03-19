@@ -12,7 +12,7 @@ let myInterval;
 let i = 0,
   isActive = true;
 function startTimer() {
-  console.log(i);
+  // console.log(i);
   start.setAttribute(
     "style",
     "box-shadow: inset 0 -4px 6px 4px #3f4ffffa, inset 0 1px 5px 17px #3f42fffa;"
@@ -47,22 +47,48 @@ function resetTimer() {
   }
   clearInterval(secondInterval);
   clearInterval(minuteInterval);
-  second.innerHTML = 15;
-  minute.innerHTML = 3;
+  second.innerHTML = "00";
+  minute.innerHTML = 1;
 }
 
 function startTime() {
   console.log("clicked");
-  minuteInterval = setInterval(minuteIntervalSetUp, 60000);
-  secondInterval = setInterval(secondIntervalSetUp, 1000);
+  if (parseInt(minute.innerHTML) === 0) {
+    minuteInterval = setInterval(minuteIntervalSetUp, 0);
+  } else {
+    minuteInterval = setInterval(minuteIntervalSetUp, 60000);
+  }
+  while (minute.innerHTML > 0) {
+    minute.innerHTML = parseInt(minute.innerHTML) - 1;
+    console.log(second.innerHTML);
+  }
+  // setTimeout(startTime, 3000);
+
+  // secondInterval = setInterval(secondIntervalSetUp, 1000);
 }
 
 function secondIntervalSetUp() {
-  second.innerHTML = parseInt(second.innerHTML) - 1;
-  console.log(second.innerHTML);
+  if (parseInt(second.innerHTML) === 0) {
+    second.innerHTML = 60;
+  }
+
+  if (second.innerHTML > 10) {
+    second.innerHTML = parseInt(second.innerHTML) - 1;
+  } else {
+    second.innerHTML = "0" + (parseInt(second.innerHTML) - 1);
+  }
+
+  // console.log(second.innerHTML.length);
 }
 
 function minuteIntervalSetUp() {
-  minute.innerHTML = parseInt(minute.innerHTML) - 1;
-  console.log(second.innerHTML);
+  while (minute.innerHTML > 0) {
+    minute.innerHTML = parseInt(minute.innerHTML) - 1;
+    console.log(second.innerHTML);
+  }
+  // minute.innerHTML = parseInt(minute.innerHTML) - 1;
+  // console.log(second.innerHTML);
+  // if (minute.innerHTML === 0) {
+  //   clearInterval(minuteInterval);
+  // }
 }
