@@ -9,11 +9,12 @@ let colorArr = ["#1e90ff", "#2ed573", "#ffa502", "#ff6348", "#ff4757"];
 
 let timeOutSetUp;
 let myInterval;
-const colorDelay = 60000;
+const colorDelay = (parseInt(minute.innerHTML) / 5) * 60000;
 const minutesDelay = 60000;
 const secondsDelay = 1000;
 const secondsCycle = 60;
 
+// ********* Color column countdown *********
 let i = 0,
   isActive = true;
 function startTimer() {
@@ -37,6 +38,52 @@ function startTimer() {
   i++;
 }
 
+// ********* Minutes countdown *********
+let isMinutesActive = true;
+function startMinutes() {
+  if (!isMinutesActive || parseInt(minute.innerHTML) === 0) {
+    return;
+  }
+
+  minute.innerHTML = parseInt(minute.innerHTML) - 1;
+  setTimeout(startMinutes, minutesDelay);
+}
+
+// ********* Seconds countdown *********
+let isSecondsActive = true,
+  count = 0;
+function startSeconds() {
+  if (!isSecondsActive) {
+    return;
+  }
+  if (parseInt(minute.innerHTML) === 0 && parseInt(second.innerHTML) === 0) {
+    console.log("in startSeconds - 1st if");
+    console.log(count);
+    timerContainer.setAttribute(
+      "style",
+      "animation: shake 0.5s; animation-iteration-count: 2;"
+    );
+    if (count > 0) {
+      isSecondsActive = false;
+    }
+    count++;
+    // isSecondsActive = false;
+  }
+
+  if (count < 2) {
+    if (parseInt(second.innerHTML) === 0) {
+      second.innerHTML = secondsCycle;
+    }
+    if (second.innerHTML > 10) {
+      second.innerHTML = parseInt(second.innerHTML) - 1;
+    } else {
+      second.innerHTML = "0" + (parseInt(second.innerHTML) - 1);
+    }
+  }
+
+  setTimeout(startSeconds, secondsDelay);
+}
+
 function pauseTimer() {
   isActive = false;
   isMinutesActive = false;
@@ -54,37 +101,6 @@ function resetTimer() {
   }
 
   second.innerHTML = "00";
-  minute.innerHTML = 5;
-}
-
-let isMinutesActive = true;
-function startMinutes() {
-  if (!isMinutesActive || parseInt(minute.innerHTML) === 0) {
-    return;
-  }
-
-  minute.innerHTML = parseInt(minute.innerHTML) - 1;
-  setTimeout(startMinutes, minutesDelay);
-}
-
-let isSecondsActive = true;
-function startSeconds() {
-  if (!isSecondsActive) {
-    return;
-  }
-  if (parseInt(minute.innerHTML) === 0 && parseInt(second.innerHTML) === 0) {
-    timerContainer.setAttribute(
-      "style",
-      "animation: shake 0.5s; animation-iteration-count: 2;"
-    );
-  }
-  if (parseInt(second.innerHTML) === 0) {
-    second.innerHTML = secondsCycle;
-  }
-  if (second.innerHTML > 10) {
-    second.innerHTML = parseInt(second.innerHTML) - 1;
-  } else {
-    second.innerHTML = "0" + (parseInt(second.innerHTML) - 1);
-  }
-  setTimeout(startSeconds, secondsDelay);
+  minute.innerHTML = minute.innerHTML;
+  count = 0;
 }
