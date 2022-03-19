@@ -3,11 +3,16 @@ let start = document.querySelector("#start");
 let pause = document.querySelector("#pause");
 let minute = document.querySelector("#minute");
 let second = document.querySelector("#second");
+let timerContainer = document.querySelector("#timer-column");
 
 let colorArr = ["#1e90ff", "#2ed573", "#ffa502", "#ff6348", "#ff4757"];
 
 let timeOutSetUp;
 let myInterval;
+const colorDelay = 60000;
+const minutesDelay = 60000;
+const secondsDelay = 1000;
+const secondsCycle = 60;
 
 let i = 0,
   isActive = true;
@@ -25,7 +30,7 @@ function startTimer() {
   try {
     let backgroundColor = "background-color:" + colorArr[i] + ";";
     row[i].setAttribute("style", backgroundColor);
-    setTimeout(startTimer, 3000);
+    setTimeout(startTimer, colorDelay);
   } catch (Exception) {
     console.log(Exception);
   }
@@ -34,61 +39,52 @@ function startTimer() {
 
 function pauseTimer() {
   isActive = false;
-  clearInterval(minuteInterval);
-  clearInterval(secondInterval);
-  // second.innerHTML = 15;
+  isMinutesActive = false;
+  isSecondsActive = false;
 }
 
 function resetTimer() {
   isActive = true;
+  isMinutesActive = true;
+  isSecondsActive = true;
+
   i = 0;
   for (let j = 0; j < row.length; j++) {
     row[j].setAttribute("style", "background-color:#f1f2f6;");
   }
-  clearInterval(secondInterval);
-  clearInterval(minuteInterval);
+
   second.innerHTML = "00";
-  minute.innerHTML = 1;
+  minute.innerHTML = 5;
 }
 
-function startTime() {
-  console.log("clicked");
-  if (parseInt(minute.innerHTML) === 0) {
-    minuteInterval = setInterval(minuteIntervalSetUp, 0);
-  } else {
-    minuteInterval = setInterval(minuteIntervalSetUp, 60000);
+let isMinutesActive = true;
+function startMinutes() {
+  if (!isMinutesActive || parseInt(minute.innerHTML) === 0) {
+    return;
   }
-  while (minute.innerHTML > 0) {
-    minute.innerHTML = parseInt(minute.innerHTML) - 1;
-    console.log(second.innerHTML);
-  }
-  // setTimeout(startTime, 3000);
 
-  // secondInterval = setInterval(secondIntervalSetUp, 1000);
+  minute.innerHTML = parseInt(minute.innerHTML) - 1;
+  setTimeout(startMinutes, minutesDelay);
 }
 
-function secondIntervalSetUp() {
+let isSecondsActive = true;
+function startSeconds() {
+  if (!isSecondsActive) {
+    return;
+  }
+  if (parseInt(minute.innerHTML) === 0 && parseInt(second.innerHTML) === 0) {
+    timerContainer.setAttribute(
+      "style",
+      "animation: shake 0.5s; animation-iteration-count: 2;"
+    );
+  }
   if (parseInt(second.innerHTML) === 0) {
-    second.innerHTML = 60;
+    second.innerHTML = secondsCycle;
   }
-
   if (second.innerHTML > 10) {
     second.innerHTML = parseInt(second.innerHTML) - 1;
   } else {
     second.innerHTML = "0" + (parseInt(second.innerHTML) - 1);
   }
-
-  // console.log(second.innerHTML.length);
-}
-
-function minuteIntervalSetUp() {
-  while (minute.innerHTML > 0) {
-    minute.innerHTML = parseInt(minute.innerHTML) - 1;
-    console.log(second.innerHTML);
-  }
-  // minute.innerHTML = parseInt(minute.innerHTML) - 1;
-  // console.log(second.innerHTML);
-  // if (minute.innerHTML === 0) {
-  //   clearInterval(minuteInterval);
-  // }
+  setTimeout(startSeconds, secondsDelay);
 }
