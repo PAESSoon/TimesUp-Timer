@@ -3,7 +3,18 @@ let start = document.querySelector("#start");
 let pause = document.querySelector("#pause");
 let minute = document.querySelector("#minute");
 let second = document.querySelector("#second");
+let btnAdd = document.querySelector("#btn-add");
+let btnMin = document.querySelector("btn-minus");
+
+function minus() {
+  minute.innerHTML--;
+}
+function add() {
+  minute.innerHTML++;
+}
+
 let timerContainer = document.querySelector("#timer-column");
+let initialMinuteVal = parseInt(minute.innerHTML);
 
 let colorArr = ["#1e90ff", "#2ed573", "#ffa502", "#ff6348", "#ff4757"];
 
@@ -84,10 +95,25 @@ function startSeconds() {
   setTimeout(startSeconds, secondsDelay);
 }
 
+let isPauseActive = false;
 function pauseTimer() {
-  isActive = false;
-  isMinutesActive = false;
-  isSecondsActive = false;
+  if (!isPauseActive) {
+    isPauseActive = true;
+  } else {
+    isPauseActive = false;
+  }
+  if (isPauseActive) {
+    isActive = false;
+    isMinutesActive = false;
+    isSecondsActive = false;
+  } else {
+    isActive = true;
+    isMinutesActive = true;
+    isSecondsActive = true;
+    startTimer();
+    startMinutes();
+    startSeconds();
+  }
 }
 
 function resetTimer() {
@@ -101,6 +127,6 @@ function resetTimer() {
   }
 
   second.innerHTML = "00";
-  minute.innerHTML = minute.innerHTML;
+  minute.innerHTML = initialMinuteVal;
   count = 0;
 }

@@ -95,10 +95,10 @@ h1 {
     font-family:sans-serif;
     font-size: 30px;
     height: 35px;
-    width: 80px;
+    width: 90px;
     display: flex;
     background-color: #ff7f50;
-    margin: 20px auto;
+    margin: 0 20px;
     justify-content: center;
     line-height: 1.3;
     letter-spacing: 2px;
@@ -116,4 +116,34 @@ h1 {
     80% { transform: translate(-1px, -1px) rotate(1deg); }
     90% { transform: translate(1px, 2px) rotate(0deg); }
     100% { transform: translate(1px, -2px) rotate(-1deg); }
+  }
+  #top-btns {
+    display: flex;
+    align-items: center;
+    margin: 20px auto;
+    width: 200px;
+  }
+  #update-time {
+      height: 20px;
+      display: flex;
+      align-items: center;
+  }
+  .btn-time {
+    align-items: center;
+    display: flex;
+    color: #dfe4ea;
+    background-color: #2f3542;
+    justify-content: center;
+    box-shadow: inset 0 -4px 6px 4px rgb(255 255 255 / 26%), inset 0 1px 5px 17px rgb(0 0 0 / 3%);
+    border-radius: 4px;
+    font-size: 26px;
+    font-weight: 100;
+    width: 35px;
+    margin: 4px;
+    height: 25px;
+  }
+  .btn-time:hover {
+    transform: scale3d(1, 1.1, 1.1);
+    background-color: #3b3a39;
+    box-shadow: inset 0 -4px 6px 4px #ff3b3a39, inset 0 1px 5px 17px #ff3b3a39;
   }
