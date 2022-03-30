@@ -46,6 +46,7 @@ h1 {
 }
 .row {
     height: 20%;
+    transition: background-color 2s linear;
 }
 #btn-control {
     text-align: center;
