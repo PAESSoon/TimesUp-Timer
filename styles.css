@@ -37,7 +37,7 @@ h1 {
 }
 
 #timer-column {
-    height: 900px;
+    /* height: 900px; */
     max-width: 900px;
     display: flex;
     flex-direction: column-reverse;
@@ -45,7 +45,7 @@ h1 {
     margin: auto;
 }
 .row {
-    height: 20%;
+    height: 13vh;
     transition: background-color 2s linear;
 }
 #btn-control {

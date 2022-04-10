@@ -9,38 +9,42 @@
 </head>
 <body>
 
-    <h1>NONOCHE TIMER</h1>
+    <div id="container">
+        <h1>NONOCHE TIMER</h1>
 
-    <div id="top-btns">
-        <div id="countdown">
-            <div id="minute">20</div>
-            <div id="divider">:</div>
-            <div id="second">00</div>
+        <div id="top-btns">
+            <div id="countdown">
+                <div id="minute">20</div>
+                <div id="divider">:</div>
+                <div id="second">00</div>
+            </div>
+        
+            <div id="update-time">
+                <button id="btn-minus" class="btn-time" onclick="minus()">-</button>
+                <button id="btn-add" class="btn-time" onclick="add()">+</button>
+            </div>
         </div>
     
-        <div id="update-time">
-            <button id="btn-minus" class="btn-time" onclick="minus()">-</button>
-            <button id="btn-add" class="btn-time" onclick="add()">+</button>
-        </div>
-    </div>
-
+        
     
-
-    <div id="timer-column">
-        <div class="row"></div>
-        <div class="row"></div>
-        <div class="row"></div>
-        <div class="row"></div>
-        <div class="row"></div>
+        <div id="timer-column">
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+            <div class="row"></div>
+        </div>
+    
+        <div id="btn-control">
+            <button id="start" class="btn-start btn" onclick="startTimer(); startMinutes(); startSeconds()">Start</button>
+            <button id="pause" class="btn-pause btn" onclick="pauseTimer()">Pause</button>
+            <button id="reset" class="btn-reset btn" onclick="resetTimer()">Reset</button>
+        </div>
+    
+        <script type="text/javascript" src="timer.js"></script>
+    
     </div>
 
-    <div id="btn-control">
-        <button id="start" class="btn-start btn" onclick="startTimer(); startMinutes(); startSeconds()">Start</button>
-        <button id="pause" class="btn-pause btn" onclick="pauseTimer()">Pause</button>
-        <button id="reset" class="btn-reset btn" onclick="resetTimer()">Reset</button>
-    </div>
-
-    <script type="text/javascript" src="timer.js"></script>
-
+   
 </body>
 </html>
