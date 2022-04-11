@@ -8,6 +8,7 @@ let btnMin = document.querySelector("btn-minus");
 let timerContainer = document.querySelector("#timer-column");
 let colorArr = ["#1e90ff", "#2ed573", "#ffa502", "#ff6348", "#ff4757"];
 
+let initialMinuteVal = parseInt(minute.innerHTML);
 let initialTotalTime =
   parseInt(minute.innerHTML) * 60000 + parseInt(second.innerHTML) * 1000;
 let totalTime = initialTotalTime;
@@ -64,6 +65,7 @@ function startTimer() {
 }
 
 let isActive = false;
+let activateTimerTimeOut = null;
 function activateTimer() {
   console.log(totalTime);
   if (isActive) {
@@ -72,6 +74,7 @@ function activateTimer() {
     isSecondsActive = false;
     start.innerHTML = "Start";
     clearTimeout(startTimerTimeOut);
+    clearTimeout(activateTimerTimeOut);
   } else {
     isActive = true;
     isMinutesActive = true;
@@ -80,46 +83,47 @@ function activateTimer() {
     if (totalTime === initialTotalTime) {
       startTimer();
     } else {
-      setTimeout(startTimer, totalTime % colorDelay);
+      activateTimerTimeOut = setTimeout(startTimer, totalTime % colorDelay);
     }
     startSeconds();
   }
 }
 
 // ********* Seconds countdown *********
-let isSecondsActive = true,
-  count = 0;
+let isSecondsActive = true;
+// count = 0;
 function startSeconds() {
   // console.log("in startSeconds");
+  // if (parseInt(minute.innerHTML) === 0 && parseInt(second.innerHTML) === 0) {
+  //   return;
+  // }
   if (parseInt(minute.innerHTML) === 0 && parseInt(second.innerHTML) === 0) {
+    console.log("in startSeconds - 1st if");
+    // console.log(count);
+    timerContainer.setAttribute(
+      "style",
+      "animation: shake 0.5s; animation-iteration-count: 2;"
+    );
+    // if (count > 0) {
+    //   isSecondsActive = false;
+    // }
+    // count++;
     return;
   }
   if (!isSecondsActive) {
     return;
   }
-  if (parseInt(minute.innerHTML) === 0 && parseInt(second.innerHTML) === 0) {
-    console.log("in startSeconds - 1st if");
-    console.log(count);
-    timerContainer.setAttribute(
-      "style",
-      "animation: shake 0.5s; animation-iteration-count: 2;"
-    );
-    if (count > 0) {
-      isSecondsActive = false;
-    }
-    count++;
-  }
 
-  if (count < 2) {
-    if (parseInt(second.innerHTML) === 0) {
-      second.innerHTML = secondsCycle;
-    }
-    if (second.innerHTML > 10) {
-      second.innerHTML = parseInt(second.innerHTML) - 1;
-    } else {
-      second.innerHTML = "0" + (parseInt(second.innerHTML) - 1);
-    }
+  // if (count < 2) {
+  if (parseInt(second.innerHTML) === 0) {
+    second.innerHTML = secondsCycle;
   }
+  if (second.innerHTML > 10) {
+    second.innerHTML = parseInt(second.innerHTML) - 1;
+  } else {
+    second.innerHTML = "0" + (parseInt(second.innerHTML) - 1);
+  }
+  // }
 
   if (parseInt(second.innerHTML) === 59) {
     minute.innerHTML -= 1;
@@ -137,6 +141,7 @@ function resetTimer() {
   isActive = false;
   isMinutesActive = false;
   isSecondsActive = false;
+  start.innerHTML = "Start";
   i = 0;
 
   for (let j = 0; j < row.length; j++) {
@@ -145,6 +150,8 @@ function resetTimer() {
 
   second.innerHTML = "00";
   minute.innerHTML = initialMinuteVal;
-  totalTime = initialTotalTime;
-  count = 0;
+  totalTime = initialMinuteVal * 60000 + parseInt(second.innerHTML) * 1000;
+  clearTimeout(startTimerTimeOut);
+  clearTimeout(activateTimerTimeOut);
+  // count = 0;
 }
