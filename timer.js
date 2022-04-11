@@ -91,12 +91,8 @@ function activateTimer() {
 
 // ********* Seconds countdown *********
 let isSecondsActive = true;
-// count = 0;
+
 function startSeconds() {
-  // console.log("in startSeconds");
-  // if (parseInt(minute.innerHTML) === 0 && parseInt(second.innerHTML) === 0) {
-  //   return;
-  // }
   if (parseInt(minute.innerHTML) === 0 && parseInt(second.innerHTML) === 0) {
     console.log("in startSeconds - 1st if");
     // console.log(count);
@@ -104,17 +100,13 @@ function startSeconds() {
       "style",
       "animation: shake 0.5s; animation-iteration-count: 2;"
     );
-    // if (count > 0) {
-    //   isSecondsActive = false;
-    // }
-    // count++;
+
     return;
   }
   if (!isSecondsActive) {
     return;
   }
 
-  // if (count < 2) {
   if (parseInt(second.innerHTML) === 0) {
     second.innerHTML = secondsCycle;
   }
@@ -123,7 +115,6 @@ function startSeconds() {
   } else {
     second.innerHTML = "0" + (parseInt(second.innerHTML) - 1);
   }
-  // }
 
   if (parseInt(second.innerHTML) === 59) {
     minute.innerHTML -= 1;
@@ -153,5 +144,4 @@ function resetTimer() {
   totalTime = initialMinuteVal * 60000 + parseInt(second.innerHTML) * 1000;
   clearTimeout(startTimerTimeOut);
   clearTimeout(activateTimerTimeOut);
-  // count = 0;
 }
