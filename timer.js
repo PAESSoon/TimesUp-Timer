@@ -5,40 +5,53 @@ let minute = document.querySelector("#minute");
 let second = document.querySelector("#second");
 let btnAdd = document.querySelector("#btn-add");
 let btnMin = document.querySelector("btn-minus");
+let timerContainer = document.querySelector("#timer-column");
+let colorArr = ["#1e90ff", "#2ed573", "#ffa502", "#ff6348", "#ff4757"];
+
+let initialTotalTime =
+  parseInt(minute.innerHTML) * 60000 + parseInt(second.innerHTML) * 1000;
+let totalTime = initialTotalTime;
+let colorDelay = initialTotalTime / 5;
 
 function minus() {
   minute.innerHTML--;
+  initialTotalTime =
+    parseInt(minute.innerHTML) * 60000 + parseInt(second.innerHTML) * 1000;
+  totalTime = initialTotalTime;
+  colorDelay = initialTotalTime / 5;
+
+  console.log("In Function, initialTotalTime: " + initialTotalTime);
+  console.log("In Function, totalTime: " + totalTime);
+  console.log("In Function, colorDelay: " + colorDelay);
 }
+
 function add() {
   minute.innerHTML++;
+  initialTotalTime =
+    parseInt(minute.innerHTML) * 60000 + parseInt(second.innerHTML) * 1000;
+  totalTime = initialTotalTime;
+  colorDelay = initialTotalTime / 5;
 }
 
-let timerContainer = document.querySelector("#timer-column");
-let initialMinuteVal = parseInt(minute.innerHTML);
+console.log("initialTotalTime: " + initialTotalTime);
 
-let colorArr = ["#1e90ff", "#2ed573", "#ffa502", "#ff6348", "#ff4757"];
-
-let timeOutSetUp;
-let myInterval;
-const colorDelay = (parseInt(minute.innerHTML) / 5) * 60000;
 const minutesDelay = 60000;
 const secondsDelay = 1000;
 const secondsCycle = 60;
 
 // ********* Color column countdown *********
-let i = 0,
-  isActive = true;
+let i = 0;
 function startTimer() {
-  // console.log(i);
   start.setAttribute(
     "style",
     "box-shadow: inset 0 -4px 6px 4px #3f4ffffa, inset 0 1px 5px 17px #3f42fffa;"
   );
 
   if (!isActive) {
-    i = 0;
     return;
   }
+
+  console.log("in StartTimer, i = : " + i);
   try {
     let backgroundColor = "background-color:" + colorArr[i] + ";";
     row[i].setAttribute("style", backgroundColor);
@@ -49,21 +62,36 @@ function startTimer() {
   i++;
 }
 
-// ********* Minutes countdown *********
-let isMinutesActive = true;
-function startMinutes() {
-  if (!isMinutesActive || parseInt(minute.innerHTML) === 0) {
-    return;
+let isActive = false;
+function activateTimer() {
+  console.log(totalTime);
+  if (isActive) {
+    isActive = false;
+    isMinutesActive = false;
+    isSecondsActive = false;
+    start.innerHTML = "Start";
+  } else {
+    isActive = true;
+    isMinutesActive = true;
+    isSecondsActive = true;
+    start.innerHTML = "Pause";
+    if (totalTime === initialTotalTime) {
+      startTimer();
+    } else {
+      setTimeout(startTimer, totalTime % colorDelay);
+    }
+    startSeconds();
   }
-
-  minute.innerHTML = parseInt(minute.innerHTML) - 1;
-  setTimeout(startMinutes, minutesDelay);
 }
 
 // ********* Seconds countdown *********
 let isSecondsActive = true,
   count = 0;
 function startSeconds() {
+  // console.log("in startSeconds");
+  if (parseInt(minute.innerHTML) === 0 && parseInt(second.innerHTML) === 0) {
+    return;
+  }
   if (!isSecondsActive) {
     return;
   }
@@ -78,7 +106,6 @@ function startSeconds() {
       isSecondsActive = false;
     }
     count++;
-    // isSecondsActive = false;
   }
 
   if (count < 2) {
@@ -92,41 +119,30 @@ function startSeconds() {
     }
   }
 
+  if (parseInt(second.innerHTML) === 59) {
+    minute.innerHTML -= 1;
+  }
+
+  totalTime -= 1000;
+
+  console.log("totalTime: " + totalTime);
+  // console.log("initialTotalTime: " + initialTotalTime);
+
   setTimeout(startSeconds, secondsDelay);
 }
 
-let isPauseActive = false;
-function pauseTimer() {
-  if (!isPauseActive) {
-    isPauseActive = true;
-  } else {
-    isPauseActive = false;
-  }
-  if (isPauseActive) {
-    isActive = false;
-    isMinutesActive = false;
-    isSecondsActive = false;
-  } else {
-    isActive = true;
-    isMinutesActive = true;
-    isSecondsActive = true;
-    startTimer();
-    startMinutes();
-    startSeconds();
-  }
-}
-
 function resetTimer() {
-  isActive = true;
-  isMinutesActive = true;
-  isSecondsActive = true;
-
+  isActive = false;
+  isMinutesActive = false;
+  isSecondsActive = false;
   i = 0;
+
   for (let j = 0; j < row.length; j++) {
     row[j].setAttribute("style", "background-color:#f1f2f6;");
   }
 
   second.innerHTML = "00";
   minute.innerHTML = initialMinuteVal;
+  totalTime = initialTotalTime;
   count = 0;
 }
