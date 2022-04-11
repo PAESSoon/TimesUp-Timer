@@ -41,6 +41,7 @@ const secondsCycle = 60;
 
 // ********* Color column countdown *********
 let i = 0;
+let startTimerTimeOut = null;
 function startTimer() {
   start.setAttribute(
     "style",
@@ -55,7 +56,7 @@ function startTimer() {
   try {
     let backgroundColor = "background-color:" + colorArr[i] + ";";
     row[i].setAttribute("style", backgroundColor);
-    setTimeout(startTimer, colorDelay);
+    startTimerTimeOut = setTimeout(startTimer, colorDelay);
   } catch (Exception) {
     console.log(Exception);
   }
@@ -70,6 +71,7 @@ function activateTimer() {
     isMinutesActive = false;
     isSecondsActive = false;
     start.innerHTML = "Start";
+    clearTimeout(startTimerTimeOut);
   } else {
     isActive = true;
     isMinutesActive = true;
